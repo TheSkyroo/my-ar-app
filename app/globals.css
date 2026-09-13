@@ -1,40 +1,27 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --cream: #f7ece4;
+  --blush: #f3d9d2;
+  --rose: #d98a86;
+  --rose-deep: #b45c66;
+  --wine: #7a3b4e;
+  --ink: #4a2b32;
+  --gold: #c9a15e;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
+}
+
+html,
+body {
   margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -42,8 +29,522 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* ============================================================
+   Landing — a single intimate moment
+   ============================================================ */
+.home {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 32px 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% -10%, #fbf3ee 0%, transparent 55%),
+    radial-gradient(90% 70% at 85% 15%, rgba(217, 138, 134, 0.28), transparent 60%),
+    radial-gradient(80% 70% at 10% 90%, rgba(201, 161, 94, 0.2), transparent 60%),
+    linear-gradient(170deg, var(--cream), var(--blush));
+}
+
+/* faint paper grain */
+.home::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: radial-gradient(rgba(74, 43, 50, 0.9) 0.5px, transparent 0.5px);
+  background-size: 4px 4px;
+}
+
+.home-stage {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.home-eyebrow {
+  margin: 0 0 6px;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--rose-deep);
+  opacity: 0;
+  animation: rise 1s ease 0.1s forwards;
+}
+
+.home-title {
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  color: var(--wine);
+  display: flex;
+  flex-direction: column;
+}
+
+.home-title > :first-child {
+  font-size: clamp(52px, 20vw, 96px);
+  opacity: 0;
+  animation: rise 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s forwards;
+}
+
+.home-title em {
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(40px, 15vw, 74px);
+  color: var(--rose-deep);
+  margin-top: -0.08em;
+  opacity: 0;
+  animation: rise 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.42s forwards;
+}
+
+/* Beating heart centerpiece */
+.heart-wrap {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin: 34px 0 40px;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  animation: rise 1s ease 0.7s forwards;
+}
+
+.heart {
+  width: 62px;
+  height: 62px;
+  fill: var(--rose-deep);
+  filter: drop-shadow(0 10px 22px rgba(180, 92, 102, 0.45));
+  animation: beat 1.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.heart-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 138, 134, 0.55), transparent 65%);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.tap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  border-radius: 999px;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+  box-shadow:
+    0 14px 34px rgba(180, 92, 102, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  opacity: 0;
+  animation: rise 1s ease 0.95s forwards;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tap:active {
+  transform: scale(0.96);
+  box-shadow: 0 8px 20px rgba(180, 92, 102, 0.4);
+}
+
+.tap-heart {
+  font-size: 15px;
+  animation: beat 1.6s ease-in-out infinite;
+}
+
+/* Drifting hearts */
+.petals {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.petal {
+  position: absolute;
+  top: -8%;
+  color: var(--rose);
+  opacity: 0;
+  animation: drift linear infinite;
+  will-change: transform, opacity;
+}
+
+.petal-1  { left: 8%;  font-size: 14px; animation-duration: 13s; animation-delay: 0s;   }
+.petal-2  { left: 20%; font-size: 20px; animation-duration: 17s; animation-delay: 3s;   color: var(--rose-deep); }
+.petal-3  { left: 33%; font-size: 12px; animation-duration: 11s; animation-delay: 6s;   }
+.petal-4  { left: 46%; font-size: 24px; animation-duration: 19s; animation-delay: 1.5s; color: var(--gold); }
+.petal-5  { left: 58%; font-size: 15px; animation-duration: 14s; animation-delay: 8s;   }
+.petal-6  { left: 70%; font-size: 18px; animation-duration: 16s; animation-delay: 4s;   color: var(--rose-deep); }
+.petal-7  { left: 82%; font-size: 13px; animation-duration: 12s; animation-delay: 9s;   }
+.petal-8  { left: 90%; font-size: 22px; animation-duration: 20s; animation-delay: 2s;   }
+.petal-9  { left: 60%; font-size: 11px; animation-duration: 15s; animation-delay: 11s;  color: var(--gold); }
+
+@keyframes drift {
+  0%   { transform: translateY(0) rotate(0deg);       opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.7; }
+  100% { transform: translateY(112vh) rotate(220deg); opacity: 0; }
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  15%      { transform: scale(1.16); }
+  30%      { transform: scale(1); }
+  45%      { transform: scale(1.1); }
+  60%      { transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.55; }
+  40%      { transform: scale(1.25); opacity: 0; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heart,
+  .tap-heart,
+  .heart-glow,
+  .petal {
+    animation: none;
   }
+  .home-eyebrow,
+  .home-title > :first-child,
+  .home-title em,
+  .heart-wrap,
+  .tap {
+    opacity: 1;
+    animation: none;
+  }
+  .petal { opacity: 0; }
+}
+
+/* ============================================================
+   AR screen — clean, minimal shell over the live camera
+   ============================================================ */
+.ar-page {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.ar-root {
+  position: absolute;
+  inset: 0;
+}
+
+.ar-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Start / status overlay shown before AR is running */
+.ar-status {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background:
+    radial-gradient(80% 70% at 50% 35%, rgba(247, 236, 228, 0.7), transparent 70%),
+    linear-gradient(170deg, var(--cream), var(--blush));
+}
+
+.ar-status-box {
+  max-width: 340px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ar-status-heart {
+  font-size: 34px;
+  color: var(--rose-deep);
+  animation: beat 1.6s ease-in-out infinite;
+  margin-bottom: 14px;
+}
+
+.ar-status-text {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  color: var(--wine);
+  font-size: 22px;
+  line-height: 1.5;
+  margin: 0 0 22px;
+}
+
+.ar-start {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  padding: 15px 44px;
+  border-radius: 999px;
+  font-family: var(--font-body), sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+  box-shadow: 0 12px 30px rgba(180, 92, 102, 0.4);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s ease;
+}
+
+.ar-start:active {
+  transform: scale(0.96);
+}
+
+/* MindAR feeds the camera into a plain <video> and shows it BEHIND A-Frame's
+   transparent WebGL canvas. Force the video fullscreen behind the canvas. */
+video {
+  display: block !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  object-fit: cover !important;
+  z-index: 0 !important;
+}
+
+/* The 3D layer: transparent, directly above the camera video. */
+.a-canvas,
+canvas.a-canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  z-index: 1 !important;
+  background: transparent !important;
+}
+
+.mindar-ui-overlay {
+  z-index: 2;
+}
+
+/* Minimal in-AR chrome */
+.ar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  padding: 18px;
+}
+
+.ar-back {
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ar-hint-pill {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  padding: 11px 22px;
+  border-radius: 999px;
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #fff;
+  white-space: nowrap;
+  background: rgba(122, 59, 78, 0.55);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: hintFade 0.6s ease both;
+}
+
+@keyframes hintFade {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ar-status-heart,
+  .ar-hint-pill {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   Compile — internal utility page (theme-matched, low priority)
+   ============================================================ */
+.home-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(180, 92, 102, 0.2);
+  border-radius: 22px;
+  padding: 28px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 24px 60px rgba(122, 59, 78, 0.15);
+}
+
+.home-card h1 {
+  font-family: var(--font-display), serif;
+  font-weight: 500;
+  font-size: 34px;
+  color: var(--wine);
+  margin: 8px 0 12px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rose-deep);
+  border: 1px solid rgba(180, 92, 102, 0.3);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+.lead {
+  color: var(--ink);
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.compile-preview {
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  margin: 8px 0 16px;
+  border: 1px solid rgba(180, 92, 102, 0.2);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.compile-preview img {
+  max-width: 220px;
+  max-height: 300px;
+  border-radius: 10px;
+}
+
+.file-label {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--rose-deep);
+  border: 1px dashed rgba(180, 92, 102, 0.45);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+}
+
+.progress {
+  position: relative;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(180, 92, 102, 0.2);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose), var(--rose-deep));
+  transition: width 0.2s ease;
+}
+
+.progress-text {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  color: var(--wine);
+}
+
+.ok-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #3f7d54;
+  margin: 0 0 16px;
+}
+
+.err-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--rose-deep);
+  margin: 0 0 16px;
+}
+
+.cta {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  padding: 15px 24px;
+  border-radius: 14px;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+  box-shadow: 0 12px 30px rgba(180, 92, 102, 0.35);
+}
+
+.cta:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.note {
+  margin: 20px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.note code,
+.lead code {
+  background: rgba(180, 92, 102, 0.12);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+
+.target-dl {
+  color: var(--rose-deep);
+  border-bottom: 1px dashed rgba(180, 92, 102, 0.5);
 }

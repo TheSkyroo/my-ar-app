@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "compile:target": "node scripts/compile-target.mjs",
+    "optimize:model": "gltf-transform optimize public/models/US.glb public/models/US.opt.glb --texture-compress webp --texture-size 1024 --compress false"
   },
   "dependencies": {
     "next": "16.3.5",
@@ -19,6 +21,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "puppeteer": "^25.10.0",
     "typescript": "^5"
   }
 }
